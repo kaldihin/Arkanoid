@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,9 +18,8 @@ public class TheGame extends JPanel {
     private int blockPieces = 4;
     private int newX = 9, newY = 5;
     private int blockWidth = (gameField.width / blockPieces) - blockSpace * blockPieces;
-    private ArrayBlockingQueue<Block> blocks = new ArrayBlockingQueue<Block>(blockPieces);
+    private List<Block> blocks = Collections.synchronizedList(new ArrayList<>(blockPieces));
     private Random rand = new Random();
-    private Block block;
 
     private Player player;
 
@@ -109,7 +107,7 @@ public class TheGame extends JPanel {
         return this.player;
     }
 
-    public ArrayBlockingQueue<Block> getBlock() {
+    public List<Block> getBlock() {
         return blocks;
     }
 
