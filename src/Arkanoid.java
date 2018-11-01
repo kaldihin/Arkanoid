@@ -22,12 +22,12 @@ public class Arkanoid extends JFrame implements KeyListener {
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 600;
 
-    public static final double BALL_RADIUS = 10.0;
-    public static final double BALL_VELOCITY = 0.7;
+    public static final double BALL_RADIUS = 15.0;
+    public static final double BALL_VELOCITY = 0.5;
 
-    public static final double PADDLE_WIDTH = 60.0;
+    public static final double PADDLE_WIDTH = 80.0;
     public static final double PADDLE_HEIGHT = 20.0;
-    public static final double PADDLE_VELOCITY = 0.6;
+    public static final double PADDLE_VELOCITY = 0.7;
 
     public static final double BLOCK_WIDTH = 60.0;
     public static final double BLOCK_HEIGHT = 20.0;
@@ -196,7 +196,7 @@ public class Arkanoid extends JFrame implements KeyListener {
         }
 
         void draw(Graphics g) {
-            g.setColor(Color.RED);
+            g.setColor(Color.WHITE);
             g.fillRect((int) (left()), (int) (top()), (int) sizeX, (int) sizeY);
         }
 
