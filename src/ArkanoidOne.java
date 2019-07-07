@@ -13,7 +13,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-public class Arkanoid extends JFrame implements KeyListener {
+public class ArkanoidOne extends JFrame implements KeyListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +49,7 @@ public class Arkanoid extends JFrame implements KeyListener {
 
     private Paddle paddle = new Paddle(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 50);
     private Ball ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-    private List<Brick> bricks = new ArrayList<Arkanoid.Brick>();
+    private List<Brick> bricks = new ArrayList<ArkanoidOne.Brick>();
     private ScoreBoard scoreboard = new ScoreBoard();
 
     private double lastFt;
@@ -327,7 +327,7 @@ public class Arkanoid extends JFrame implements KeyListener {
         }
     }
 
-    public Arkanoid() {
+    public ArkanoidOne() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setUndecorated(false);
@@ -489,7 +489,7 @@ public class Arkanoid extends JFrame implements KeyListener {
     }
 
     public static void main(String[] args) {
-        new Arkanoid().run();
+        new ArkanoidOne().run();
     }
 
 }

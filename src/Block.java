@@ -25,7 +25,7 @@ public class Block {
 
     public void render(Graphics g) {
         if (blockHits == 0)
-        g.setColor(new Color(190,67,87));
+            g.setColor(new Color(190,67,87));
         if (blockHits == 1)
             g.setColor(new Color(23,156,67));
         if (blockHits == 2)

@@ -92,7 +92,7 @@ public class TheGame extends JPanel {
     public void stop() {
         isRunning = false;
         if (gameThread.isAlive())
-        gameThread.interrupt();
+            gameThread.interrupt();
     }
 
     public Dimension getGameDimension() {
