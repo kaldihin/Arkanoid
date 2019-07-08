@@ -3,9 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class TheGame extends JPanel {
 
@@ -15,13 +12,14 @@ public class TheGame extends JPanel {
     private int positionM, targetX;
     private int blockHeight = 30;
     private int blockSpace = 5;
-    private int blockPieces = 4;
+    private static int blockPieces = 4;
     private int newX = 9, newY = 5;
     private int blockWidth = (gameField.width / blockPieces) - blockSpace * blockPieces;
-    private List<Block> blocks = Collections.synchronizedList(new ArrayList<>(blockPieces));
+    private Block[] blocks = new Block[blockPieces];
+//    private static List<Block> blocks = Collections.synchronizedList(new ArrayList<>(blockPieces));
     private Random rand = new Random();
 
-    private Player player;
+    private Plate plate;
 
     private Ball ball;
 
@@ -36,12 +34,12 @@ public class TheGame extends JPanel {
                 } else {
                     if (e.getX() < positionM) {
                         targetX = positionM - e.getX();
-                        player.moveOnXAxis(-targetX);
+                        plate.moveOnXAxis(-targetX);
                         positionM = e.getX();
                     }
                     if (e.getX() > positionM) {
                         targetX = e.getX() - positionM;
-                        player.moveOnXAxis(targetX);
+                        plate.moveOnXAxis(targetX);
                         positionM = e.getX();
                     }
                 }
@@ -54,17 +52,17 @@ public class TheGame extends JPanel {
 //                if (!isRunning || isPaused) {
 //                    if (e.getKeyCode() == KeyEvent.VK_ENTER) start();
 //                } else {
-//                    if (e.getKeyCode() == KeyEvent.VK_RIGHT) player.moveOnXAxis(60);
-//                    if (e.getKeyCode() == KeyEvent.VK_LEFT) player.moveOnXAxis(-60);
+//                    if (e.getKeyCode() == KeyEvent.VK_RIGHT) plate.moveOnXAxis(60);
+//                    if (e.getKeyCode() == KeyEvent.VK_LEFT) plate.moveOnXAxis(-60);
 //                }
 //            }
 //        });
 
-        player = new Player(this, (int) ((gameField.getWidth() - Player.standartPlayerWidth) / 2),
-                gameField.height - Player.standartPlayerHeight, Player.standartPlayerWidth, Player.standartPlayerHeight);
+        plate = new Plate(this, (int) ((gameField.getWidth() - Plate.standardPlateWidth) / 2),
+                gameField.height - Plate.standardPlateHeight, Plate.standardPlateWidth, Plate.standardPlateHeight);
         ball = new Ball(this, gameField.width / 2, gameField.height / 2, Ball.randomBallRadius);
-        for (int i = blockPieces; i > 0; i--) {
-            blocks.add(new Block(newX, newY, blockWidth, blockHeight));
+        for (int i = 0; i < blockPieces; i++) {
+            blocks[i] = (new Block(newX, newY, blockWidth, blockHeight));
             newX = newX + blockWidth + blockSpace;
         }
 
@@ -73,8 +71,8 @@ public class TheGame extends JPanel {
     public void loseBall() {
 //        stop();
         ball.setPosition(gameField.width / 2, gameField.height / 2);
-        player.setX((int) ((gameField.getWidth() - Player.standartPlayerWidth) / 2));
-        player.setY(gameField.height - Player.standartPlayerHeight);
+        plate.setX((int) ((gameField.getWidth() - Plate.standardPlateWidth) / 2));
+        plate.setY(gameField.height - Plate.standardPlateHeight);
         repaint();
     }
 
@@ -99,15 +97,15 @@ public class TheGame extends JPanel {
         return gameField;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlate(Plate plate) {
+        this.plate = plate;
     }
 
-    public Player getPlayer() {
-        return this.player;
+    public Plate getPlate() {
+        return this.plate;
     }
 
-    public List<Block> getBlock() {
+    public Block[] getBlock() {
         return blocks;
     }
 
@@ -116,8 +114,8 @@ public class TheGame extends JPanel {
         if (!isRunning) {
             gameField = new Dimension(size.width - 200, size.height - 200);
             ball.setPosition(gameField.width / 2, gameField.height / 2);
-            player.setX((int) ((gameField.getWidth() - Player.standartPlayerWidth) / 2));
-            player.setY(gameField.height - Player.standartPlayerHeight);
+            plate.setX((int) ((gameField.getWidth() - Plate.standardPlateWidth) / 2));
+            plate.setY(gameField.height - Plate.standardPlateHeight);
         }
 
     }
@@ -141,20 +139,19 @@ public class TheGame extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
 
-        g.translate((getWidth() - gameField.width) / 2, (getHeight() - gameField.height) / 2);
+        g.translate((getWidth() - gameField.width) / 2, (getHeight() - gameField.height) / 2);          //From which corner to begin drawing
 
-        //g.setColor(new Color(23, 100, 165));
-        //g.fillRect(100, 100, 10, 10);
 
         ball.render(g);
-        player.render(g);
-        for (Block bl : blocks) {
-            if (bl.getBlockHits() < 3)
-                bl.render(g);
+        plate.render(g);
+
+        for (int i = 0; i < 4; i++) {
+            if (blocks[i].getBlockHits() < 3)
+                blocks[i].render(g);
         }
 
 
-        g.setColor(new Color(0, 0, 0));
+        g.setColor(new Color(0, 0, 0));         //Border for the playing field
         g.drawRect(0, 0, gameField.width, gameField.height);
     }
 

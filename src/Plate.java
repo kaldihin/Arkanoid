@@ -1,13 +1,13 @@
 import java.awt.*;
 
-public class Player {
+public class Plate {
 
-    public static int standartPlayerWidth = 150;
-    public static int standartPlayerHeight = 20;
+    public static int standardPlateWidth = 150;
+    public static int standardPlateHeight = 20;
     private Rectangle hitBox;
     private TheGame instance;
 
-    public Player(TheGame inst, int x, int y, int width, int height) {
+    public Plate(TheGame inst, int x, int y, int width, int height) {
         instance = inst;
         hitBox = new Rectangle(x, y, width, height);
     }
@@ -15,10 +15,10 @@ public class Player {
     public void moveOnXAxis(int speed) {
         hitBox.x += speed;
         if (hitBox.x < 0) hitBox.x = 0;
-        if (hitBox.x > instance.getGameDimension().width - instance.getPlayer().hitBox.width)
-            hitBox.x = instance.getGameDimension().width - instance.getPlayer().hitBox.width;
+        if (hitBox.x > instance.getGameDimension().width - instance.getPlate().hitBox.width)
+            hitBox.x = instance.getGameDimension().width - instance.getPlate().hitBox.width;
 
-        //hitBox.x = ((hitBox.x < 0)? 0:((hitBox.x > instance.getGameDimension().width-instance.getPlayer().hitBox.width)? instance.getGameDimension().width-instance.getPlayer().hitBox.width:hitBox.x + speed));
+        //hitBox.x = ((hitBox.x < 0)? 0:((hitBox.x > instance.getGameDimension().width-instance.getPlate().hitBox.width)? instance.getGameDimension().width-instance.getPlate().hitBox.width:hitBox.x + speed));
 
     }
 

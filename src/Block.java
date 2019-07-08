@@ -6,7 +6,6 @@ public class Block {
     private int x = 5, y = 5;
     private Rectangle block;
     private int blockHits = 0;
-    private TheGame theGame;
     public Block(int x, int y, int width, int height) {
         this.block = new Rectangle(x, y, width, height);
     }
@@ -30,6 +29,7 @@ public class Block {
             g.setColor(new Color(23,156,67));
         if (blockHits == 2)
             g.setColor(new Color(12,56,170));
+
         g.fillRect(block.x, block.y, block.width, block.height);
     }
 }

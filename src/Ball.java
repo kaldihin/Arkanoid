@@ -1,7 +1,4 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.util.Random;
 
 public class Ball {
@@ -37,16 +34,17 @@ public class Ball {
         if (pos.y - radius <= 0 && vector.height < 0) vector.height = -vector.height;
         if (pos.y + radius >= instance.getGameDimension().height && vector.height > 0) instance.loseBall();
 
-        if (instance.getPlayer() != null) {
-            if (instance.getPlayer().collidesWith(new Rectangle(pos.x - radius, pos.y - radius, radius * 2, radius * 2))) {
+        if (instance.getPlate() != null) {
+            if (instance.getPlate().collidesWith(new Rectangle(pos.x - radius, pos.y - radius, radius * 2, radius * 2))) {
                 vector.height = -vector.height;
             }
         }
         for (Block bl : instance.getBlock()) {
             if (bl.collidesWithMy(pos.x - radius, pos.y - radius)) {
-                bl.blockHit();
-                if (bl.getBlockHits() < 3)
+                if (bl.getBlockHits() < 3) {
                     vector.height = -vector.height;
+                    bl.blockHit();
+                }
             }
         }
 
